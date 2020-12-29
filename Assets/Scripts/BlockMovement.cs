@@ -22,20 +22,29 @@ public class BlockMovement : MonoBehaviour
     float _levelSpeed;
     float _afterTime = 0;
     Transform[,] _grid;
+    bool _isGameOver;
     // Start is called before the first frame update
     void Start()
     {
+        InitGame();
+    }
+
+    public void InitGame()
+    {
+        _score = 0;
         _grid = new Transform[_height, _width];
         _nextBlockId = Random.Range(0, _allPrefabs.Count - 1);
         _text = _scoreText.GetComponent<Text>();
         CreateNewBlock();
         _levelSpeed = _defaultSpeed;
+        _isGameOver = false;
     }
 
     private void CreateNewBlock()
     {
         _text.text = _score.ToString();
         _newBlock = Instantiate(_allPrefabs[_nextBlockId], this.transform.position, Quaternion.identity);
+        _newBlock.tag = "Block";
         _newBlockScrpit = _newBlock.GetComponent<Block>();
         _newBlockScrpit._grid = _grid;
         _newBlockScrpit._width = _width;
@@ -47,6 +56,8 @@ public class BlockMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isGameOver)
+            return;
         if (_newBlock == null)
         {
             CreateNewBlock();
@@ -72,6 +83,7 @@ public class BlockMovement : MonoBehaviour
                 if(!SaveBlock())
                 {
                     Debug.Log("游戏结束");
+                    _isGameOver = true;
                     _playerScore.text = _score.ToString();
                     _gameOverPanel.SetActive(true);
                     return;
