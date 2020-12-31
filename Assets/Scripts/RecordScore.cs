@@ -8,10 +8,7 @@ public class RecordScore : MonoBehaviour
 {
     // Start is called before the first frame update
     public InputField _input;
-    void Start()
-    {
-        
-    }
+    public GameObject _playerScorePanel;
 
     public void OnClick()
     {
@@ -22,12 +19,7 @@ public class RecordScore : MonoBehaviour
         else
         {
             this.transform.parent.gameObject.SetActive(false);
+            _playerScorePanel.SetActive(true);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

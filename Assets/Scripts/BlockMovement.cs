@@ -44,10 +44,11 @@ public class BlockMovement : MonoBehaviour
     {
         _text.text = _score.ToString();
         _newBlock = Instantiate(_allPrefabs[_nextBlockId], this.transform.position, Quaternion.identity);
-        _newBlock.tag = "Block";
+        _newBlock.tag = "NextBlock";
         _newBlockScrpit = _newBlock.GetComponent<Block>();
         _newBlockScrpit._grid = _grid;
         _newBlockScrpit._width = _width;
+        _newBlockScrpit._height = _height;
         _nextBlockId = Random.Range(0, _allPrefabs.Count - 1);
         _nextBlocks.ForEach(p => p.SetActive(false));
         _nextBlocks[_nextBlockId].SetActive(true);
@@ -84,8 +85,8 @@ public class BlockMovement : MonoBehaviour
                 {
                     Debug.Log("游戏结束");
                     _isGameOver = true;
-                    _playerScore.text = _score.ToString();
                     _gameOverPanel.SetActive(true);
+                    _playerScore.text = _score.ToString();
                     return;
                 }
                 RemoveFullRow();
