@@ -26,11 +26,6 @@ public class BlockMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitGame();
-    }
-
-    public void InitGame()
-    {
         _score = 0;
         _grid = new Transform[_height, _width];
         _nextBlockId = Random.Range(0, _allPrefabs.Count - 1);
