@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class BlockMovement : MonoBehaviour
 {
-    public int _width,_height;
+    public int _width, _height;
     public float _maxSpeed;
     public List<GameObject> _allPrefabs;
     public List<GameObject> _nextBlocks;
@@ -41,9 +41,9 @@ public class BlockMovement : MonoBehaviour
         _newBlock = Instantiate(_allPrefabs[_nextBlockId], this.transform.position, Quaternion.identity);
         _newBlock.tag = "NextBlock";
         _newBlockScrpit = _newBlock.GetComponent<Block>();
-        _newBlockScrpit._grid = _grid;
-        _newBlockScrpit._width = _width;
-        _newBlockScrpit._height = _height;
+        _newBlockScrpit.Grid = _grid;
+        _newBlockScrpit.Width = _width;
+        _newBlockScrpit.Height = _height;
         _nextBlockId = Random.Range(0, _allPrefabs.Count - 1);
         _nextBlocks.ForEach(p => p.SetActive(false));
         _nextBlocks[_nextBlockId].SetActive(true);
@@ -76,7 +76,7 @@ public class BlockMovement : MonoBehaviour
             _afterTime = 0;
             if (!_newBlockScrpit.Move(Vector3.down))
             {
-                if(!SaveBlock())
+                if (!SaveBlock())
                 {
                     Debug.Log("游戏结束");
                     _isGameOver = true;
@@ -126,7 +126,7 @@ public class BlockMovement : MonoBehaviour
         int removeCount = 0;
         for (int i = _height - 1; i >= 0; i--)
         {
-            if(IsRowFull(i))
+            if (IsRowFull(i))
             {
                 removeCount++;
                 RemoveFullRow(i);
@@ -163,7 +163,7 @@ public class BlockMovement : MonoBehaviour
     {
         for (int i = 0; i < _width; i++)
         {
-            if(_grid[rowCount,i] == null)
+            if (_grid[rowCount, i] == null)
             {
                 return false;
             }
@@ -187,7 +187,7 @@ public class BlockMovement : MonoBehaviour
         {
             for (int j = 0; j < _width; j++)
             {
-                if(_grid[i,j] != null)
+                if (_grid[i, j] != null)
                 {
                     _grid[i, j].transform.position += Vector3.down;
                     _grid[i - 1, j] = _grid[i, j];

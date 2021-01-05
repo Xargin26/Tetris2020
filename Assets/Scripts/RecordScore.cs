@@ -1,4 +1,3 @@
-using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ public class RecordScore : MonoBehaviour
     public InputField _input;
     public Text _score;
     public GameObject _playerScorePanel;
-    List<ScoreRow> _scoreTable;
+    public List<ScoreRow> _scoreTable;
 
     void Start()
     {
@@ -21,9 +20,9 @@ public class RecordScore : MonoBehaviour
 
     public void OnClick()
     {
-        if(string.IsNullOrEmpty(_input.text))
+        if (string.IsNullOrEmpty(_input.text))
         {
-            Debug.Log("Íæ¼ÒêÇ³ÆÎª¿Õ£¬ÇëÊäÈëÍæ¼ÒêÇ³Æ£¡");
+            Debug.Log("è¯·è¾“å…¥çŽ©å®¶æ˜µç§°ï¼");
         }
         else
         {
@@ -41,7 +40,7 @@ public class RecordScore : MonoBehaviour
             }
             else
             {
-                if(_scoreTable.Any(p=>p.Score < score))
+                if (_scoreTable.Any(p => p.Score < score))
                 {
                     _scoreTable.RemoveAt(_scoreTable.Count - 1);
                     _scoreTable.Add(scoreRow);
