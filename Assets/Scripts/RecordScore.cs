@@ -44,7 +44,7 @@ public class RecordScore : MonoBehaviour
                 {
                     _scoreTable.RemoveAt(_scoreTable.Count - 1);
                     _scoreTable.Add(scoreRow);
-                    _scoreTable.OrderByDescending(p => p.Score);
+                    _scoreTable = _scoreTable.OrderByDescending(p => p.Score).ToList();
                     for (int i = 0; i < _scoreTable.Count; i++)
                     {
                         _scoreTable[i].Id = i + 1;

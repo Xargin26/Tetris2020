@@ -11,7 +11,6 @@ public class Block : MonoBehaviour, IMove, IRotate
     public int Height;
     private List<Transform> Children;
 
-
     private void Start()
     {
         Children = new List<Transform>(this.GetComponentsInChildren<Transform>());
@@ -43,15 +42,15 @@ public class Block : MonoBehaviour, IMove, IRotate
 
                 if (minX < 0)
                 {
-                    Move(new Vector3(-minX, 0, 0));
+                    if (!Move(new Vector3(-minX, 0, 0)))
+                        this.transform.Rotate(Vector3.forward, 90);
                 }
 
                 if (maxX >= Width)
                 {
-                    Move(new Vector3(Width - maxX - 1, 0, 0));
+                    if (!Move(new Vector3(Width - maxX - 1, 0, 0)))
+                        this.transform.Rotate(Vector3.forward, 90);
                 }
-
-                this.transform.Rotate(Vector3.forward, 90);
             }
         }
     }

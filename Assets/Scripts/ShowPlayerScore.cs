@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class ShowPlayerScore : MonoBehaviour
 {
@@ -13,12 +14,15 @@ public class ShowPlayerScore : MonoBehaviour
     void Start()
     {
         var recordScore = EndGame.GetComponent<RecordScore>();
+        //recordScore._scoreTable = recordScore._scoreTable.OrderByDescending(p => p.Score).ToList();
         for (int i = 0; i < recordScore._scoreTable.Count; i++)
         {
             if (i >= ScoreRows.Count)
                 break;
 
+            ScoreRows[i].SetActive(true);
             var scoreRowTr = ScoreRows[i].transform;
+
             for (int j = 0; j < scoreRowTr.childCount; j++)
             {
                 var child = scoreRowTr.GetChild(j);
