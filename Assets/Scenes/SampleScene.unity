@@ -1997,7 +1997,7 @@ GameObject:
   - component: {fileID: 242593737}
   - component: {fileID: 242593736}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5141,6 +5141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _input: {fileID: 699980854}
+  _score: {fileID: 242593736}
   _playerScorePanel: {fileID: 1980718055}
 --- !u!1 &813743155
 GameObject:
@@ -8126,7 +8127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8803688640267183592, guid: d20c4597a2c226e41bba7659b2b1cfbf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.5
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 8803688640267183592, guid: d20c4597a2c226e41bba7659b2b1cfbf, type: 3}
       propertyPath: m_LocalPosition.z
