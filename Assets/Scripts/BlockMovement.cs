@@ -5,13 +5,13 @@ using Random = UnityEngine.Random;
 
 public class BlockMovement : MonoBehaviour
 {
-    public int _width, _height;
-    public float _maxSpeed;
-    public List<GameObject> _allPrefabs;
-    public List<GameObject> _nextBlocks;
-    public GameObject _scoreText;
-    public Text _playerScore;
-    public GameObject _gameOverPanel;
+    public int Width, Height;
+    public float MaxSpeed;
+    public List<GameObject> AllPrefabs;
+    public List<GameObject> NextBlocks;
+    public GameObject ScoreText;
+    public Text PlayerScore;
+    public GameObject GameOverPanel;
     Text _text;
     int _score;
     int _nextBlockId = 0;
@@ -22,38 +22,34 @@ public class BlockMovement : MonoBehaviour
     float _levelSpeed;
     float _afterTime = 0;
     Transform[,] _grid;
-    bool _isGameOver;
     // Start is called before the first frame update
     void Start()
     {
         _score = 0;
-        _grid = new Transform[_height, _width];
-        _nextBlockId = Random.Range(0, _allPrefabs.Count - 1);
-        _text = _scoreText.GetComponent<Text>();
+        _grid = new Transform[Height, Width];
+        _nextBlockId = Random.Range(0, AllPrefabs.Count - 1);
+        _text = ScoreText.GetComponent<Text>();
         CreateNewBlock();
         _levelSpeed = _defaultSpeed;
-        _isGameOver = false;
     }
 
     private void CreateNewBlock()
     {
         _text.text = _score.ToString();
-        _newBlock = Instantiate(_allPrefabs[_nextBlockId], this.transform.position, Quaternion.identity);
+        _newBlock = Instantiate(AllPrefabs[_nextBlockId], this.transform.position, Quaternion.identity);
         _newBlock.tag = "NextBlock";
         _newBlockScrpit = _newBlock.GetComponent<Block>();
         _newBlockScrpit.Grid = _grid;
-        _newBlockScrpit.Width = _width;
-        _newBlockScrpit.Height = _height;
-        _nextBlockId = Random.Range(0, _allPrefabs.Count - 1);
-        _nextBlocks.ForEach(p => p.SetActive(false));
-        _nextBlocks[_nextBlockId].SetActive(true);
+        _newBlockScrpit.Width = Width;
+        _newBlockScrpit.Height = Height;
+        _nextBlockId = Random.Range(0, AllPrefabs.Count - 1);
+        NextBlocks.ForEach(p => p.SetActive(false));
+        NextBlocks[_nextBlockId].SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_isGameOver)
-            return;
         if (_newBlock == null)
         {
             CreateNewBlock();
@@ -64,7 +60,7 @@ public class BlockMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            _speed = _maxSpeed;
+            _speed = MaxSpeed;
         }
         else
         {
@@ -79,9 +75,9 @@ public class BlockMovement : MonoBehaviour
                 if (!SaveBlock())
                 {
                     Debug.Log("游戏结束");
-                    _isGameOver = true;
-                    _gameOverPanel.SetActive(true);
-                    _playerScore.text = _score.ToString();
+                    Time.timeScale = 0;
+                    GameOverPanel.SetActive(true);
+                    PlayerScore.text = _score.ToString();
                     return;
                 }
                 RemoveFullRow();
@@ -114,7 +110,7 @@ public class BlockMovement : MonoBehaviour
             var childTransform = _newBlock.transform.GetChild(i);
             int x = Mathf.RoundToInt(childTransform.position.x);
             int y = Mathf.RoundToInt(childTransform.position.y);
-            if (y >= _height)
+            if (y >= Height)
                 return false;
             _grid[y, x] = childTransform;
         }
@@ -124,7 +120,7 @@ public class BlockMovement : MonoBehaviour
     private void RemoveFullRow()
     {
         int removeCount = 0;
-        for (int i = _height - 1; i >= 0; i--)
+        for (int i = Height - 1; i >= 0; i--)
         {
             if (IsRowFull(i))
             {
@@ -155,13 +151,13 @@ public class BlockMovement : MonoBehaviour
         }
 
         _levelSpeed = _defaultSpeed - Mathf.RoundToInt(_score / 2000) * 0.1f;
-        if (_levelSpeed < _maxSpeed)
-            _levelSpeed = _maxSpeed;
+        if (_levelSpeed < MaxSpeed)
+            _levelSpeed = MaxSpeed;
     }
 
     private bool IsRowFull(int rowCount)
     {
-        for (int i = 0; i < _width; i++)
+        for (int i = 0; i < Width; i++)
         {
             if (_grid[rowCount, i] == null)
             {
@@ -173,7 +169,7 @@ public class BlockMovement : MonoBehaviour
 
     private void RemoveFullRow(int rowCount)
     {
-        for (int i = 0; i < _width; i++)
+        for (int i = 0; i < Width; i++)
         {
             GameObject.Destroy(_grid[rowCount, i].gameObject);
             _grid[rowCount, i] = null;
@@ -183,9 +179,9 @@ public class BlockMovement : MonoBehaviour
 
     private void RowDown(int rowCount)
     {
-        for (int i = rowCount; i < _height; i++)
+        for (int i = rowCount; i < Height; i++)
         {
-            for (int j = 0; j < _width; j++)
+            for (int j = 0; j < Width; j++)
             {
                 if (_grid[i, j] != null)
                 {
